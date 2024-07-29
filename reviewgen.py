@@ -118,6 +118,3 @@ def generate_review(min_phrases=3, max_phrases=7):
     if random.random() < 0.10:
         review_text = review_text.lower()
     return review_text
-
-for _ in range(100):
-    print(generate_review())
