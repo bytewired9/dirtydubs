@@ -5,7 +5,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 
-from reviewgen import generate_review, review_tree
+from reviewgen import generate_review
 
 
 class ReviewGen:
@@ -27,7 +27,7 @@ class ReviewGen:
             logging.error("Failed to click the text box: %s", e)
             return
 
-        review = generate_review(review_tree)
+        review = generate_review()
 
         if not review:
             logging.error("Failed to generate review text.")
