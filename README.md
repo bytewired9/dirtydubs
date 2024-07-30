@@ -15,7 +15,7 @@ Dirtydubs is an automation script designed to automate the process of navigating
 
 1. **Clone the repository**:
     ```sh
-    git clone https://github.com/yourusername/dirtydubs.git
+    git clone https://github.com/bytewired9/dirtydubs.git
     cd dirtydubs
     ```
 
