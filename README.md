@@ -2,7 +2,7 @@
 
 ## Overview
 
-Dirtydubs is an automation script designed to automate the process of navigating and completing online surveys, specifically for Inspire Brands' Qualtrics surveys. The script leverages Selenium WebDriver to interact with the survey pages, and it can generate and input review text to the survey forms.
+Dirtydubs is an automation script designed to automate the process of navigating and completing BWW surveys.
 
 ## Features
 
@@ -24,7 +24,11 @@ Dirtydubs is an automation script designed to automate the process of navigating
     pip install -r requirements.txt
     ```
 
-3. **Setup the configuration file**:
+## Setup
+
+1. **Run `setup.bat`**
+
+2. **Set up the configuration file**:
     Ensure the `config.ini` file is in the root directory of the project. If it doesn't exist, the script will generate a template for you on the first run. Edit this file to match your requirements.
 
 ## Configuration
@@ -59,16 +63,38 @@ This command will run the survey automation process 5 times.
 
 ## Project Structure
 
-- **main.py**: Entry point of the application. Manages the overall workflow and repeats the survey process based on user input.
-- **config_manager.py**: Manages configuration file operations, including checking and reading the configuration.
-- **survey.py**: Core logic for running the survey, integrating various helper classes to perform specific tasks.
-- **survey_selector.py**: Contains methods for selecting survey options and navigating through the survey pages.
-- **review_generator.py**: Handles the generation of review text to be input into the survey.
-- **click_helper.py**: Provides methods to safely click on web elements, handling potential exceptions.
-- **web_driver_factory.py**: Factory class for creating web driver instances.
-- **web_driver_waiter.py**: Helper class for waiting for specific conditions to be met in the web driver.
-- **reviewgen.py**: Contains the logic for generating realistic review text using predefined phrases and patterns.
-
+```
+dirtydubs/
+├── language_packs/
+│   └── default.db
+│
+├── proxy/
+│   ├── background.js
+│   └── manifest.json
+│
+├── utils/
+│   ├── generator/
+│   │   ├── review_generator.py
+│   │   └── reviewgen.py
+│   │ 
+│   ├── packmaker/
+│   │   ├── example.py
+│   │   ├── reviewlist.py
+│   │   └── tree.py
+│   │ 
+│   ├── webdriver/
+│   │   ├── web_driver_factory.py
+│   │   └──  web_driver_waiter.py
+│   │ 
+│   ├── click_helper.py
+│   ├── config_manager.py
+│   ├── survey.py
+│   └── survey_selector.py
+│
+├── requirements.txt
+├── main.py
+└── setup.bat
+```
 ## Logging
 
 Logging is configured to provide detailed information about the script's execution. The log messages include timestamps, log levels, and detailed messages. Adjust the logging configuration in `main.py` as needed.
