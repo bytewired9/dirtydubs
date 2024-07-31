@@ -6,9 +6,9 @@ This script reads configuration settings, navigates through a survey, and genera
 import sys
 import logging
 import argparse
-from colorama import Fore, Back, init
-from survey import Survey
-from web_driver_factory import WebDriverFactory
+from colorama import Fore, init
+from utils.survey import Survey
+from utils.webdriver.web_driver_factory import WebDriverFactory
 
 init(autoreset=True)
 
