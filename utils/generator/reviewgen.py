@@ -210,6 +210,3 @@ def generate_review(min_phrases=5, max_phrases=30):
 
     conn.close()
     return review_text
-
-for _ in range(200):
-    print(generate_review())
