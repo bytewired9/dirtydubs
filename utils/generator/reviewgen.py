@@ -97,21 +97,7 @@ def select_pack(cursor):
         raise Exception("No config table found in the database.")
 
 
-# def read_written_phrases(file_path):
-#     if not os.path.exists(file_path):
-#         return set()
-#     with open(file_path, "r") as f:
-#         return set(line.strip() for line in f)
-#
-#
-# def write_phrase_if_not_exists(file_path, phrase):
-#     written_phrases = read_written_phrases(file_path)
-#     if phrase not in written_phrases:
-#         with open(file_path, "a") as f:
-#             f.write(f"{phrase}\n")
-#         print(f"Last phrase added to {file_path}.")
-
-def generate_review(min_phrases=5, max_phrases=30):
+def generate_review(min_phrases=3, max_phrases=5):
     db_files = find_db_files(os.path.join(os.path.dirname(__file__), "../../language_packs"))
     if not db_files:
         raise Exception("No .db files found in the directory.")
@@ -173,47 +159,10 @@ def generate_review(min_phrases=5, max_phrases=30):
             break
         next_phrase = random.choice(possible_phrases)[0]
         review.append(next_phrase)
-        current_node = next_phrase.split()[0]
-
-    # Ensure we have enough phrases
-    attempts = 0
-    max_attempts = 10
-    while len(review) < min_phrases and attempts < max_attempts:
-        cursor.execute(
-            """
-            SELECT phrase FROM Phrases 
-            WHERE id IN (
-                SELECT child_id FROM PhraseRelations 
-                WHERE parent_id = (
-                    SELECT id FROM Phrases WHERE phrase = ?
-                )
-            )
-        """,
-            (current_node,),
-        )
-        possible_phrases = cursor.fetchall()
-        if not possible_phrases:
-            break
-        next_phrase = random.choice(possible_phrases)[0]
-        review.append(next_phrase)
-        current_node = next_phrase.split()[0]
-        attempts += 1
+        current_node = next_phrase
 
     if len(review) < min_phrases:
-        # Check if the last phrase is a leaf node
-        cursor.execute(
-            """
-            SELECT COUNT(*) FROM PhraseRelations 
-            WHERE parent_id = (
-                SELECT id FROM Phrases WHERE phrase = ?
-            )
-        """,
-            (review[-1],),
-        )
-    # is_leaf_node = cursor.fetchone()[0] == 0
-    # if is_leaf_node:
-    #     write_phrase_if_not_exists("short_reviews.txt", review[-1])
-    # return None
+        raise Exception(f"Unable to generate review with the minimum number of phrases. \n {review}")
 
     while True:
         cursor.execute(
