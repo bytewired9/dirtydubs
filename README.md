@@ -84,7 +84,7 @@ dirtydubs/
 │   │ 
 │   ├── webdriver/
 │   │   ├── web_driver_factory.py
-│   │   └──  web_driver_waiter.py
+│   │   └── web_driver_waiter.py
 │   │ 
 │   ├── click_helper.py
 │   ├── config_manager.py
