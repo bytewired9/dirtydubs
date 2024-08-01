@@ -21,3 +21,8 @@ endings = [
 required_continuations = {
     "went"
 }
+
+prefixes = [
+    "Once upon a time...",
+    "In a galaxy far, far away,"
+]

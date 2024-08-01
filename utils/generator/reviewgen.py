@@ -203,6 +203,12 @@ def generate_review(min_phrases=3, max_phrases=5):
         review.append(ending)
 
     review_text = " ".join(review)
+
+    if random.random() < 0.3:
+        cursor.execute("SELECT prefix FROM Prefixes ORDER BY RANDOM() LIMIT 1")
+        prefix = cursor.fetchone()[0]
+        review_text = prefix + " " + review_text
+
     review_text = replace_with_curated_synonyms(review_text)
 
     review_text = clean_text(review_text)

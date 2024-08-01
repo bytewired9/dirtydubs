@@ -3,7 +3,7 @@ import sqlite3
 import random
 import string
 
-from tree import review_tree, endings, required_continuations
+from tree import review_tree, endings, required_continuations, prefixes
 
 
 def generate_random_pack_name(length=10):
@@ -79,6 +79,18 @@ def initialize_database():
     """
     )
 
+    # Create table for prefixes
+    cursor.execute(
+        """
+    CREATE TABLE IF NOT EXISTS Prefixes (
+        id INTEGER PRIMARY KEY,
+        prefix TEXT UNIQUE,
+        pack_name TEXT,
+        FOREIGN KEY (pack_name) REFERENCES config (pack_name)
+    )
+    """
+    )
+
     exclusive_input = input(
         "Is this pack exclusive? (default is False) [y/N]: "
     ).lower()
@@ -145,6 +157,14 @@ def initialize_database():
         cursor.executemany(
             "INSERT OR IGNORE INTO RequiredContinuations (phrase, pack_name) VALUES (?, ?)",
             [(phrase, pack_name) for phrase in required_continuations],
+        )
+
+    cursor.execute("SELECT COUNT(*) FROM Prefixes")
+    if cursor.fetchone()[0] == 0:
+        # Populate the Prefixes table
+        cursor.executemany(
+            "INSERT OR IGNORE INTO Prefixes (prefix, pack_name) VALUES (?, ?)",
+            [(prefix, pack_name) for prefix in prefixes],
         )
 
     conn.commit()
