@@ -101,7 +101,7 @@ Logging is configured to provide detailed information about the script's executi
 
 ## License
 
-This project is licensed under a unique license. See the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT license. See the [LICENSE](LICENSE) file for details.
 
 ## Contributing
 
