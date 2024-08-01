@@ -29,12 +29,12 @@ class ClickHelper:
                     driver.execute_script("arguments[0].removeAttribute('disabled')", element)
 
                 driver.execute_script("arguments[0].click();", element)
-                return
+                return True
 
             except (ElementClickInterceptedException, ElementNotInteractableException):
                 if element:
                     element.click()
-                return
+                return True
 
             except (NoSuchElementException, StaleElementReferenceException):
                 if attempt < retries - 1:
@@ -46,7 +46,7 @@ class ClickHelper:
                     str(identifier) if use_for else 'id=' +
                                                     str(identifier)
                 )
-                return
+                return False
 
             except Exception as e:
                 logging.error(
@@ -59,17 +59,22 @@ class ClickHelper:
                 if attempt < retries - 1:
                     time.sleep(delay)
                 else:
-                    return
+                    return False
 
     @staticmethod
     def next_click(driver):
         """Safely click NextButton element and wait for .QuestionText's innerHTML to change."""
         while True:
             time.sleep(0.4)
-            question_text_element = driver.find_element(By.CSS_SELECTOR, ".QuestionText")
-            old_html = question_text_element.get_attribute("innerHTML")
+            try:
+                question_text_element = driver.find_element(By.CSS_SELECTOR, ".QuestionText")
+                old_html = question_text_element.get_attribute("innerHTML")
+            except NoSuchElementException:
+                logging.info("Survey has ended, no more questions found.")
+                return False
 
-            ClickHelper.safe_click(driver, "NextButton")
+            if not ClickHelper.safe_click(driver, "NextButton"):
+                return False
 
             try:
                 WebDriverWait(driver, 2).until(
@@ -83,3 +88,4 @@ class ClickHelper:
                 break
             except Exception:
                 continue
+        return True
