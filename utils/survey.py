@@ -26,7 +26,6 @@ class Survey:
                 order_receptions,
                 order_times
             ] = ConfigManager.read_config()
-
             logging.info("Store Number: %s", store_id)
             logging.info("Order Types: %s", order_types)
             logging.info("Order Receptions: %s", order_receptions)

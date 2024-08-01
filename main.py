@@ -10,6 +10,8 @@ from colorama import Fore, init
 from utils.survey import Survey
 from utils.webdriver.web_driver_factory import WebDriverFactory
 
+BROWSER = "firefox"
+
 init(autoreset=True)
 
 # Configure logging
@@ -20,40 +22,41 @@ logging.basicConfig(
     Fore.GREEN + ' - %(message)s'
 )
 
+LOGO = """
 
-LOGO = """\
-                  -=## #  # ##::
-               ## #            # ##
-        ##    #                    #    ##
-       # #   *                      +   # #
-       # #  ##                      ##  # *
-       # ##*### #                # ###*#+ #
-         ##  # +              -   # #  ##
-          #### #  # #  #  #  # *  # ####
-        #.# ### ###-         ==### ### # #
-      #########   .#-        *#   +#########
-           ######  #          -  ######
-            ##### # ##      ## # #####
-             ###  ## ##    ## ##  ###
-            ####   # ###  ### #   ####
-            *###   ##        ##   ###.
-             ###*#  ###    ###  #####
-                ##*#=        =#*##
-                ##################
-                # ###  *  *  ### *
-                   *#        #=
-                    #=#    ###
-                     ##    ##
-                      ## -##
-                       ####"""
-
-
+     ____  _      __        ____        __        
+    / __ \(_)____/ /___  __/ __ \__  __/ /_  _____
+   / / / / / ___/ __/ / / / / / / / / / __ \/ ___/
+  / /_/ / / /  / /_/ /_/ / /_/ / /_/ / /_/ (__  ) 
+ /_____/_/_/   \__/\__, /_____/\__,_/_.___/____/  
+                  /____/           
+                 
+                     ▄▄&ΓⁿB4▄
+             ¢   ▄█▀▀        ╙▀█▄   t
+           ,¬▌  ▐                ▌   U,
+           ▓▐▄ ▄█▄              ╒██ ,▌▓
+           ▓▄▀▀████            ████▀▀▄▌
+            `███▌▀▄▌█▄▀█▄,█Æ▌▀Æ▄▀▄███"
+           ▄██▄██▌████      ▄███▐██▄██▄
+          ╙▀▀▀████▄`]▌      ▐▌`▄████▀▀▀▀
+               ████▐▌Æ▀▀¬¬▀▀&▐▌▐███
+               ▐██  █ ██  ██ █  ███
+               ▐██  ]██▄▄▄▄█▄▌  ██▌
+                ▀▀█▌,██▀▀▀▀██µ▄█▀▀
+                  ██████████████
+                  "╘██`-  ¬ ▐█▀"
+                     █▄▄  ╒ █
+                      ██  ██
+                       ▀██▀
+                       
+"""
 def main(repeat_count):
     """Main function to run the survey specified times."""
     for _ in range(repeat_count):
-        driver = WebDriverFactory.get_webdriver()
-        sys.stdout.write("\033[F")  # back to previous line
-        sys.stdout.write("\033[K")  # clear line
+        driver = WebDriverFactory.get_webdriver(BROWSER.lower())
+        if BROWSER.lower == "chrome" or "edge":
+            sys.stdout.write("\033[F")  # back to previous line
+            sys.stdout.write("\033[K")  # clear line
         survey = Survey(driver)
         survey.run()
         driver.quit()
