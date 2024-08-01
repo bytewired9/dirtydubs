@@ -54,11 +54,11 @@ class Survey:
             self.selector.click_elements_with_pattern('label[for$="~5"]')
             ClickHelper.next_click(self.driver)
             self.selector.click_elements_with_pattern('label[for$="~2"]')
-            ClickHelper.next_click(self.driver)
-            self.selector.click_elements_with_pattern('label[for$="~2"]')
-            time.sleep(0.4)
-            ClickHelper.safe_click(self.driver, "NextButton")
-            time.sleep(2)
+            if ClickHelper.next_click(self.driver):
+                self.selector.click_elements_with_pattern('label[for$="~2"]')
+                time.sleep(0.4)
+                ClickHelper.safe_click(self.driver, "NextButton")
+                time.sleep(2)
             logging.info("Review Completed!")
 
         except Exception as e:
