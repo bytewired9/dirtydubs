@@ -44,7 +44,7 @@ review_tree = {
         "loved",
         "enjoyed our visit",
         "visited",
-        "experienced",
+        
         "had an amazing dinner",
         "checked out",
         "tried",
@@ -67,7 +67,7 @@ review_tree = {
         "checked out",
         "decided to try",
         "had an incredible lunch",
-        "experienced",
+        
         "tried",
         "spent our evening",
         "had a fun time",
@@ -105,7 +105,7 @@ review_tree = {
         "enjoyed",
         "had a blast",
         "checked out",
-        "experienced",
+        
         "decided to try",
         "had a fun night",
         "tried",
@@ -145,7 +145,7 @@ review_tree = {
         "loved",
         "enjoyed our visit",
         "visited",
-        "experienced",
+        
         "had an amazing dinner",
         "checked out",
         "tried",
@@ -168,7 +168,7 @@ review_tree = {
         "had a fantastic lunch",
         "checked out",
         "decided to try",
-        "experienced",
+        
         "had a great time",
         "spent our evening",
         "chose to dine",
@@ -227,7 +227,7 @@ review_tree = {
         "loved our time",
         "checked out",
         "decided to try",
-        "experienced",
+        
         "tried",
         "spent our evening",
         "had a fantastic time",
@@ -248,7 +248,7 @@ review_tree = {
         "had a fantastic dinner",
         "checked out",
         "decided to try",
-        "experienced",
+        
         "had a great time",
         "spent our evening",
         "had a fun time",
@@ -288,7 +288,7 @@ review_tree = {
         "loved our visit",
         "checked out",
         "decided to try",
-        "experienced",
+        
         "tried",
         "spent the evening",
         "had a fantastic time",
@@ -308,7 +308,7 @@ review_tree = {
         "loved our visit",
         "checked out",
         "decided to try",
-        "experienced",
+        
         "tried",
         "spent our evening",
         "had a great time",
@@ -328,7 +328,7 @@ review_tree = {
         "loved our time",
         "checked out",
         "decided to try",
-        "experienced",
+        
         "tried",
         "spent our evening",
         "had a fantastic time",
@@ -370,7 +370,7 @@ review_tree = {
         "had a team lunch",
         "checked out",
         "decided to try",
-        "experienced",
+        
         "had a great time",
         "spent our evening",
         "chose to dine",
@@ -387,7 +387,7 @@ review_tree = {
         "loved",
         "enjoyed our visit",
         "visited",
-        "experienced",
+        
         "had an amazing dinner",
         "checked out",
         "tried",
@@ -409,7 +409,7 @@ review_tree = {
         "had a family dinner",
         "checked out",
         "decided to try",
-        "experienced",
+        
         "had a great time",
         "spent our evening",
         "chose to dine",
@@ -429,7 +429,7 @@ review_tree = {
         "checked out",
         "decided to try",
         "visited",
-        "experienced",
+        
         "had a fantastic dinner",
         "spent the evening",
         "had a great time",
@@ -449,7 +449,7 @@ review_tree = {
         "checked out",
         "decided to try",
         "visited",
-        "experienced",
+        
         "had a great dinner",
         "spent the evening",
         "had a great time",
@@ -469,7 +469,7 @@ review_tree = {
         "checked out",
         "decided to try",
         "visited",
-        "experienced",
+        
         "had a great dinner",
         "spent the evening",
         "had a great time",
@@ -489,7 +489,7 @@ review_tree = {
         "checked out",
         "decided to try",
         "visited",
-        "experienced",
+        
         "had a fantastic dinner",
         "spent the evening",
         "had a great time",
@@ -509,7 +509,7 @@ review_tree = {
         "checked out",
         "decided to try",
         "visited",
-        "experienced",
+        
         "had a fantastic dinner",
         "spent the evening",
         "had a great time",
@@ -529,7 +529,7 @@ review_tree = {
         "checked out",
         "decided to try",
         "visited",
-        "experienced",
+        
         "had a great dinner",
         "spent the evening",
         "had a great time",
@@ -549,7 +549,7 @@ review_tree = {
         "checked out",
         "decided to try",
         "visited",
-        "experienced",
+        
         "had a fantastic dinner",
         "spent the evening",
         "had a great time",
@@ -569,7 +569,7 @@ review_tree = {
         "checked out",
         "decided to try",
         "visited",
-        "experienced",
+        
         "had a fantastic dinner",
         "spent the evening",
         "had a great time",
@@ -589,7 +589,7 @@ review_tree = {
         "checked out",
         "decided to try",
         "visited",
-        "experienced",
+        
         "had a fantastic dinner",
         "spent the evening",
         "had a great time",
@@ -609,7 +609,7 @@ review_tree = {
         "checked out",
         "decided to try",
         "visited",
-        "experienced",
+        
         "had a fantastic dinner",
         "spent the evening",
         "had a great time",
@@ -629,7 +629,7 @@ review_tree = {
         "checked out",
         "decided to try",
         "visited",
-        "experienced",
+        
         "had a fantastic dinner",
         "spent the evening",
         "had a great time",
@@ -649,7 +649,7 @@ review_tree = {
         "checked out",
         "decided to try",
         "visited",
-        "experienced",
+        
         "had a fantastic dinner",
         "spent the evening",
         "had a great time",
@@ -669,7 +669,7 @@ review_tree = {
         "checked out",
         "decided to try",
         "visited",
-        "experienced",
+        
         "had a fantastic dinner",
         "spent the evening",
         "had a great time",
@@ -689,7 +689,7 @@ review_tree = {
         "checked out",
         "decided to try",
         "visited",
-        "experienced",
+        
         "had a great dinner",
         "spent the evening",
         "had a great time",
@@ -709,7 +709,7 @@ review_tree = {
         "checked out",
         "decided to try",
         "visited",
-        "experienced",
+        
         "had a fantastic dinner",
         "spent the evening",
         "had a great time",
@@ -729,7 +729,7 @@ review_tree = {
         "checked out",
         "decided to try",
         "visited",
-        "experienced",
+        
         "had a great dinner",
         "spent the evening",
         "had a great time",
@@ -749,7 +749,7 @@ review_tree = {
         "checked out",
         "decided to try",
         "visited",
-        "experienced",
+        
         "had a fantastic dinner",
         "spent the evening",
         "had a great time",
@@ -978,27 +978,6 @@ review_tree = {
         "and had a blast",
         "and can't wait to go back",
         "and had an amazing time",
-        "and loved the wings",
-        "and had a great meal",
-        "and enjoyed the drinks",
-        "and were impressed with the service",
-        "and had a wonderful time",
-        "and had a memorable experience"
-    ],
-    "experienced": [
-        "Buffalo Wild Wings",
-        "BWW",
-        "B-Dubs",
-        "the local Buffalo Wild Wings",
-        "our favorite wing spot",
-        "the Buffalo Wild Wings in town",
-        "the nearby BWW",
-        "our go-to B-Dubs",
-        "the Buffalo Wild Wings",
-        "the popular BWW nearby",
-        "and had a fantastic time",
-        "and were very satisfied",
-        "and highly recommend it",
         "and loved the wings",
         "and had a great meal",
         "and enjoyed the drinks",
@@ -1815,7 +1794,7 @@ review_tree = {
         "checked out",
         "decided to try",
         "visited",
-        "experienced",
+        
         "had a fantastic dinner",
         "spent the evening",
         "had a great time",
@@ -2237,7 +2216,7 @@ review_tree = {
         "checked out",
         "decided to try",
         "visited",
-        "experienced",
+        
         "had a great dinner",
         "spent the evening",
         "had a great time",
@@ -3632,7 +3611,7 @@ required_continuations = {
     "had a great time",
     "enjoyed our visit",
     "visited",
-    "experienced",
+    
     "had an amazing dinner",
     "tried",
     "decided to go",
