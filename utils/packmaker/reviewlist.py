@@ -3,7 +3,7 @@ import sqlite3
 import random
 import string
 
-from example import review_tree, endings, required_continuations
+from tree import review_tree, endings, required_continuations
 
 
 def generate_random_pack_name(length=10):
