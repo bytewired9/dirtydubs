@@ -7,7 +7,7 @@ Dirtydubs is an automation script designed to automate the process of navigating
 ## Features
 
 - **Automated Survey Navigation**: The script navigates through the survey, selecting predefined options and filling out necessary fields.
-- **Review Generation**: Generates realistic review texts using predefined phrases and patterns. The probability that two randomly generated reviews will be the same is approximately \(2.70 \times 10^{-9}\), or 0.00000027%, which is extremely low.
+- **Review Generation**: Generates realistic review texts using predefined phrases and patterns. The probability that two randomly generated reviews will be the same is approximately $\( \frac{1}{1000000000000} \)$. You have better chances of becoming an *astronaut*.
 - **Configurable**: Customizable configurations through a `config.ini` file to specify store ID, order types, order receptions, and order times.
 - **Logging**: Detailed logging to track the execution process and any errors encountered.
 
