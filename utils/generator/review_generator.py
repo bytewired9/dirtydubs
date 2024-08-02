@@ -2,7 +2,7 @@ import logging
 import time
 
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support import expected_conditions as ec
 from selenium.webdriver.support.wait import WebDriverWait
 
 from utils.generator.reviewgen import generate_review
@@ -19,7 +19,7 @@ class ReviewGen:
 
         try:
             textbox = WebDriverWait(driver, 10).until(
-                EC.presence_of_element_located((By.ID, textbox_id))
+                ec.presence_of_element_located((By.ID, textbox_id))
             )
             driver.execute_script("arguments[0].scrollIntoView();", textbox)
             driver.execute_script("arguments[0].click();", textbox)

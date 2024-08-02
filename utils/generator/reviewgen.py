@@ -75,7 +75,6 @@ def select_pack(cursor):
         columns = [info[1] for info in cursor.fetchall()]
         if "pack_name" in columns and "exclusive" in columns:
             cursor.execute("SELECT pack_name, exclusive FROM config")
-            config_contents = cursor.fetchall()
 
             cursor.execute("SELECT pack_name FROM config WHERE exclusive = 1")
             exclusive_packs = cursor.fetchall()

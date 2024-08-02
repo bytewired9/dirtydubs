@@ -9,7 +9,7 @@ chrome.webRequest.onBeforeSendHeaders.addListener(
       var headers = details.requestHeaders;
   
       headers.push({name: "X-Forwarded-For", value: randomIP});
-  
+
       return {requestHeaders: headers};
     },
     {urls: ["<all_urls>"]},

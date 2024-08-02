@@ -837,7 +837,7 @@ review_tree = {
         "and had a memorable experience"
     ],
     ('had a post-run meal', 'loved our time', 'loved our visit', 'had a post-hike meal', 'went for a casual meal',
-     'had a fantastic lunch','decided to enjoy a family meal', 'spent our night', 'had a team lunch',
+     'had a fantastic lunch', 'decided to enjoy a family meal', 'spent our night', 'had a team lunch',
      'went for a quick bite', 'went for a celebratory meal', 'loved our evening'): [
         "at Buffalo Wild Wings",
         "at BWW",
@@ -3725,4 +3725,3 @@ prefixes = [
     "During a recent day out,",
     "While enjoying a sunny day,"
 ]
-
