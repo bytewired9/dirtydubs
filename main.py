@@ -10,7 +10,7 @@ from colorama import Fore, init
 from utils.survey import Survey
 from utils.webdriver.web_driver_factory import WebDriverFactory
 
-BROWSER = "firefox"
+BROWSER = "edge"
 
 init(autoreset=True)
 
