@@ -1,8 +1,10 @@
 import os
 from selenium import webdriver
+from selenium.webdriver.edge.service import Service
 from selenium.webdriver.chrome.options import Options as ChromeOptions
 from selenium.webdriver.firefox.options import Options as FirefoxOptions
 from selenium.webdriver.edge.options import Options as EdgeOptions
+from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 
 
 class WebDriverFactory:
@@ -18,18 +20,21 @@ class WebDriverFactory:
             chrome_options = ChromeOptions()
             chrome_options.add_argument("--log-level=3")
             chrome_options.add_argument(f"--load-extension={proxy_path}")
+            chrome_options.add_experimental_option('excludeSwitches', ['enable-logging'])
             return webdriver.Chrome(options=chrome_options)
 
         elif browser == 'firefox':
             firefox_options = FirefoxOptions()
-            # Add any Firefox-specific options here
+            firefox_options.add_argument(f"--load-extension={proxy_path}")
             return webdriver.Firefox(options=firefox_options)
 
         elif browser == 'edge':
             edge_options = EdgeOptions()
             edge_options.add_argument("--log-level=3")
             edge_options.add_argument(f"--load-extension={proxy_path}")
-            return webdriver.Edge(options=edge_options)
+            edge_options.add_experimental_option('excludeSwitches', ['enable-logging'])
+            service = Service(log_path=os.devnull)
+            return webdriver.Edge(service=service, options=edge_options)
 
         else:
             raise ValueError(f"Unsupported browser: {browser}")
