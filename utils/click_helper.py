@@ -6,7 +6,7 @@ from selenium.common import ElementClickInterceptedException, ElementNotInteract
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 
-from utils.webdriver.web_driver_waiter import WebDriverWaiter
+from utils.webdriver import web_driver_waiter as wdw
 
 
 class ClickHelper:
@@ -24,7 +24,7 @@ class ClickHelper:
         for attempt in range(retries):
             try:
                 if identifier:
-                    WebDriverWaiter.wait_for_presence(driver, locator, use_css_selector=True)
+                    wdw.WebDriverWaiter.wait_for_presence(driver, locator, use_css_selector=True)
                     element = driver.find_element(By.CSS_SELECTOR, locator)
                     driver.execute_script("arguments[0].removeAttribute('disabled')", element)
 

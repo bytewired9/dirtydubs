@@ -4,7 +4,7 @@ import random
 from selenium.webdriver.common.by import By
 
 from utils.webdriver.web_driver_waiter import WebDriverWaiter
-from utils.click_helper import ClickHelper
+from utils import click_helper as ch
 
 
 class SurveySelector:
@@ -19,7 +19,7 @@ class SurveySelector:
         WebDriverWaiter.wait_for_presence(self.driver, pattern, use_css_selector=True)
         elements = self.driver.find_elements(By.CSS_SELECTOR, pattern)
         for elem in elements:
-            ClickHelper.safe_click(self.driver, identifier=elem.get_attribute("for"), use_for=True)
+            ch.ClickHelper.safe_click(self.driver, identifier=elem.get_attribute("for"), use_for=True)
 
     def select_random_option(self, options, ids, label):
         """Select a random option from the provided options and click the corresponding input."""
@@ -31,7 +31,7 @@ class SurveySelector:
             use_css_selector=True
         )
         element = self.driver.find_element(By.CSS_SELECTOR, f'[for$="{suffix}"]')
-        ClickHelper.safe_click(self.driver, identifier=element.get_attribute("for"), use_for=True)
+        ch.ClickHelper.safe_click(self.driver, identifier=element.get_attribute("for"), use_for=True)
         logging.info("Selected %s: %s", label, selected_option)
         return selected_option
 
@@ -90,7 +90,7 @@ class SurveySelector:
             elements,
             key=lambda e: int(e.get_attribute("for").split("~")[-1])
         )
-        ClickHelper.safe_click(
+        ch.ClickHelper.safe_click(
             self.driver,
             identifier=highest_suffix_elem.get_attribute("for"),
             use_for=True
