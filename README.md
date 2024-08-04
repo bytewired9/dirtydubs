@@ -76,7 +76,7 @@ dirtydubs/
 ├── utils/
 │   ├── maintenance/
 │   │   ├── __init__.py
-│   │   ├── update.py
+│   │   ├── updater.py
 │   │   └── telemetry.py
 │   │ 
 │   ├── generator/
