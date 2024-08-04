@@ -9,9 +9,11 @@ import argparse
 from colorama import Fore, init
 from utils.survey import Survey
 from utils.webdriver.web_driver_factory import WebDriverFactory
+from utils.maintenance import updater
+
 
 BROWSER = "edge"
-
+VERSION = "1.0.0"
 init(autoreset=True)
 
 # Configure logging
@@ -50,11 +52,15 @@ LOGO = """
                        ▀██▀
                        
 """
+
+
 def main(repeat_count):
     """Main function to run the survey specified times."""
+    if updater.update(VERSION, repeat_count):
+        print(LOGO)
     for _ in range(repeat_count):
         driver = WebDriverFactory.get_webdriver(BROWSER.lower())
-        if BROWSER.lower == "chrome" or "edge":
+        if BROWSER.lower() in ["chrome", "edge"]:
             sys.stdout.write("\033[F")  # back to previous line
             sys.stdout.write("\033[K")  # clear line
         survey = Survey(driver)
