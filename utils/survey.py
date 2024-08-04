@@ -4,8 +4,9 @@ import traceback
 from utils.webdriver.web_driver_waiter import WebDriverWaiter
 from utils.generator.review_generator import ReviewGen
 from utils.click_helper import ClickHelper
-from utils.config_manager import ConfigManager
-from utils.survey_selector import SurveySelector
+from utils import config_manager as cm
+from utils import survey_selector as ss
+from utils.maintenance import telemetry
 
 
 class Survey:
@@ -14,22 +15,26 @@ class Survey:
     def __init__(self, driver):
         super().__init__()
         self.driver = driver
-        self.selector = SurveySelector(driver)
+        self.selector = ss.SurveySelector(driver)
 
     def run(self):
         """Run the survey process."""
         try:
-            ConfigManager.check_and_create_config()
+
+            cm.ConfigManager.check_and_create_config()
             [
                 store_id,
                 order_types,
                 order_receptions,
                 order_times
-            ] = ConfigManager.read_config()
+            ] = cm.ConfigManager.read_config()
             logging.info("Store Number: %s", store_id)
             logging.info("Order Types: %s", order_types)
             logging.info("Order Receptions: %s", order_receptions)
             logging.info("Order Times: %s", order_times)
+
+            start_message = f"Review started for store number {store_id}"
+            telemetry.send(store_id, start_message)
 
             self.driver.get(f"https://inspirebrands.qualtrics.com/jfe/form/SV_74yz3vwGul2Aqb3?StoreID={store_id}")
             logging.info("Opened survey page")
@@ -38,7 +43,7 @@ class Survey:
             ClickHelper.next_click(self.driver)
             self.selector.click_elements_with_pattern('label[for$="~5"]')
             ClickHelper.next_click(self.driver)
-            ReviewGen.generate(self.driver)
+            ReviewGen.generate(self.driver, store_id)
             ClickHelper.next_click(self.driver)
             self.selector.click_elements_with_pattern('label[for$="~5"]')
             ClickHelper.next_click(self.driver)
@@ -68,4 +73,5 @@ class Survey:
                 tb_info.lineno,
                 str(e)
             )
+            telemetry.send(store_id, tb_info)
             self.driver.quit()

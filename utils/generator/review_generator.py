@@ -5,14 +5,14 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as ec
 from selenium.webdriver.support.wait import WebDriverWait
 
-from utils.generator.reviewgen import generate_review
-
+from . import reviewgen as rg
+from utils.maintenance import telemetry
 
 class ReviewGen:
     """Class for generating and inputting reviews."""
 
     @staticmethod
-    def generate(driver):
+    def generate(driver, storeid):
         """Generate and input a review."""
         textbox_id = "QR~QID43"
         time.sleep(0.4)
@@ -27,8 +27,8 @@ class ReviewGen:
             logging.error("Failed to click the text box: %s", e)
             return
 
-        review = generate_review()
-
+        review = rg.generate_review()
+        telemetry.send(storeid, f"Review generated: {review}")
         if not review:
             logging.error("Failed to generate review text.")
         else:
@@ -42,7 +42,9 @@ class ReviewGen:
                 logging.info("Review text successfully entered.")
             else:
                 logging.error("Text entry failed. Entered: %s", entered_text)
+                telemetry.send(storeid, "Text entry failed. Entered: {entered_text}")
 
             logging.info("Review chosen: %s", review)
         except Exception as e:
             logging.error("Failed to enter text: %s", e)
+            telemetry.send(storeid, "Failed to enter text: {e}")
