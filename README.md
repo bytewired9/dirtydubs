@@ -26,11 +26,12 @@ Dirtydubs is an automation script designed to automate the process of navigating
 
 ## Setup
 
-1. **Run `setup.bat`**
+1. **Run `install.bat`**
 
 2. **Set up the configuration file**:
-    Ensure the `config.ini` file is in the root directory of the project. If it doesn't exist, the script will generate a template for you on the first run. Edit this file to match your requirements.
-
+    Ensure the `config.ini` is edited to your needs.\
+    *Suggestion: remove breakfast and overnight from your config*
+   
 ## Configuration
 
 The configuration is managed via the `config.ini` file:
