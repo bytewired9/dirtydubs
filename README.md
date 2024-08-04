@@ -74,7 +74,13 @@ dirtydubs/
 │   └── manifest.json
 │
 ├── utils/
+│   ├── maintenance/
+│   │   ├── __init__.py
+│   │   ├── update.py
+│   │   └── telemetry.py
+│   │ 
 │   ├── generator/
+│   │   ├── __init__.py
 │   │   ├── review_generator.py
 │   │   └── reviewgen.py
 │   │ 
@@ -84,17 +90,19 @@ dirtydubs/
 │   │   └── tree.py
 │   │ 
 │   ├── webdriver/
+│   │   ├── __init__.py
 │   │   ├── web_driver_factory.py
 │   │   └── web_driver_waiter.py
-│   │ 
+│   │
+│   ├── __init__.py
 │   ├── click_helper.py
 │   ├── config_manager.py
 │   ├── survey.py
 │   └── survey_selector.py
 │
 ├── requirements.txt
-├── main.py
-└── setup.bat
+└── main.py
+
 ```
 ## Logging
 
