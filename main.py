@@ -13,7 +13,7 @@ from utils.maintenance import updater
 
 
 BROWSER = "edge"
-VERSION = "1.0.1"
+VERSION = "1.0.2"
 init(autoreset=True)
 
 # Configure logging
