@@ -214,5 +214,8 @@ def generate_review(min_phrases=3, max_phrases=5):
     if random.random() < 0.10:
         review_text = review_text.lower()
 
+    if random.random() > 0.20:
+        review_text = ""
+
     conn.close()
     return review_text
