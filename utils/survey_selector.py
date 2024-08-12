@@ -14,17 +14,8 @@ class SurveySelector:
         super().__init__()
         self.driver = driver
 
-    def click_elements_with_pattern(self, pattern):
-        """Click elements matching a pattern."""
-        WebDriverWaiter.wait_for_presence(self.driver, pattern, use_css_selector=True)
-        elements = self.driver.find_elements(By.CSS_SELECTOR, pattern)
-        for elem in elements:
-            ch.ClickHelper.safe_click(self.driver, identifier=elem.get_attribute("for"), use_for=True)
-
-    def select_random_option(self, options, ids, label):
-        """Select a random option from the provided options and click the corresponding input."""
-        selected_option = random.choice(options)
-        suffix = ids[selected_option]
+    def click_element_by_suffix(self, suffix):
+        """Click an element by its suffix."""
         WebDriverWaiter.wait_for_presence(
             self.driver,
             f'label[for$="{suffix}"]',
@@ -32,23 +23,33 @@ class SurveySelector:
         )
         element = self.driver.find_element(By.CSS_SELECTOR, f'[for$="{suffix}"]')
         ch.ClickHelper.safe_click(self.driver, identifier=element.get_attribute("for"), use_for=True)
-        logging.info("Selected %s: %s", label, selected_option)
-        return selected_option
 
-    def select_order_types(self, types):
-        """Select order types randomly from the provided types
-        and click the corresponding inputs."""
+    def click_elements_with_pattern(self, pattern):
+        """Click elements matching a pattern."""
+        WebDriverWaiter.wait_for_presence(self.driver, pattern, use_css_selector=True)
+        elements = self.driver.find_elements(By.CSS_SELECTOR, pattern)
+        for elem in elements:
+            ch.ClickHelper.safe_click(self.driver, identifier=elem.get_attribute("for"), use_for=True)
+
+    def choose_random_option(self, options, ids):
+        """Select a random option from the provided options and return the selected option and suffix."""
+        selected_option = random.choice(options)
+        suffix = ids[selected_option]
+        logging.info("Chosen option: %s with suffix %s", selected_option, suffix)
+        return selected_option, suffix
+
+    def select_order_type(self, types):
+        """Select order type randomly from the provided types and return the selected option and suffix."""
         type_ids = {
             'call': '~1',
             'web': '~2',
             'app': '~3',
             'walkin': '~4'
         }
-        return self.select_random_option(types, type_ids, "order type")
+        return self.choose_random_option(types, type_ids)
 
     def select_order_reception(self, receptions, selected_type):
-        """Select order reception randomly from the provided types
-        and click the corresponding inputs."""
+        """Select order reception randomly from the provided types and return the selected option and suffix."""
         reception_ids = {
             'delivery': '~1',
             'carryout': '~3',
@@ -67,11 +68,10 @@ class SurveySelector:
         if not valid_receptions:
             valid_receptions = [r for r in receptions if r in reception_ids]
 
-        return self.select_random_option(valid_receptions, reception_ids, "order reception")
+        return self.choose_random_option(valid_receptions, reception_ids)
 
     def select_daypart(self, order_times):
-        """Select a daypart randomly from the provided order times
-        and click the corresponding input."""
+        """Select a daypart randomly from the provided order times and return the selected option and suffix."""
         daypart_ids = {
             "breakfast": "~1",
             "lunch": "~2",
@@ -80,7 +80,7 @@ class SurveySelector:
             "latenight": "~5",
             "overnight": "~6",
         }
-        self.select_random_option(order_times, daypart_ids, "daypart")
+        return self.choose_random_option(order_times, daypart_ids)
 
     def select_highest_suffix(self, pattern):
         """Select the label with the highest for$=~# suffix."""
