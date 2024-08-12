@@ -12,7 +12,7 @@ class ReviewGen:
     """Class for generating and inputting reviews."""
 
     @staticmethod
-    def generate(driver, storeid):
+    def generate(driver, storeid, review):
         """Generate and input a review."""
         textbox_id = "QR~QID43"
         time.sleep(0.4)
@@ -26,13 +26,13 @@ class ReviewGen:
         except Exception as e:
             logging.error("Failed to click the text box: %s", e)
             return
-
-        review = rg.generate_review()
-        telemetry.send(storeid, f"Review generated: {review}")
         if not review:
             logging.error("Failed to generate review text.")
         else:
-            logging.info("Review generated: %s", review)
+            if not review == "":
+                logging.info("Review generated: %s", review)
+            else:
+                logging.info("No Review Generated.")
 
         try:
             textbox.clear()
