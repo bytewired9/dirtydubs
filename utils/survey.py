@@ -3,11 +3,11 @@ import time
 import traceback
 from utils.webdriver.web_driver_waiter import WebDriverWaiter
 from utils.generator.review_generator import ReviewGen
+import utils.generator.reviewgen as rg
 from utils.click_helper import ClickHelper
 from utils import config_manager as cm
 from utils import survey_selector as ss
 from utils.maintenance import telemetry
-
 
 class Survey:
     """Main class for running the survey."""
@@ -33,7 +33,21 @@ class Survey:
             logging.info("Order Receptions: %s", order_receptions)
             logging.info("Order Times: %s", order_times)
 
-            start_message = f"Review started for store number {store_id}"
+            selected_type, type_suffix = self.selector.select_order_type(order_types)
+            reception, reception_suffix = self.selector.select_order_reception(order_receptions, selected_type)
+            order_time, time_suffix = self.selector.select_daypart(order_times)
+            review = rg.generate_review()
+            if review == "":
+                review_message = "None"
+            else:
+                review_message = review
+            start_message = (
+                f"Review started: \n" +
+                f"Order Type: `{selected_type}` \n" +
+                f"Order Reception: `{reception}` \n" +
+                f"Order Time: `{order_time}` \n" +
+                f"Review Chosen: `{review_message}`"
+            )
             telemetry.send(store_id, start_message)
 
             self.driver.get(f"https://inspirebrands.qualtrics.com/jfe/form/SV_74yz3vwGul2Aqb3?StoreID={store_id}")
@@ -43,15 +57,15 @@ class Survey:
             ClickHelper.next_click(self.driver)
             self.selector.click_elements_with_pattern('label[for$="~5"]')
             ClickHelper.next_click(self.driver)
-            ReviewGen.generate(self.driver, store_id)
+            ReviewGen.generate(self.driver, store_id, review)
             ClickHelper.next_click(self.driver)
             self.selector.click_elements_with_pattern('label[for$="~5"]')
             ClickHelper.next_click(self.driver)
-            selected_type = self.selector.select_order_types(order_types)
+            self.selector.click_element_by_suffix(type_suffix)
             ClickHelper.next_click(self.driver)
-            self.selector.select_order_reception(order_receptions, selected_type)
+            self.selector.click_element_by_suffix(reception_suffix)
             ClickHelper.next_click(self.driver)
-            self.selector.select_daypart(order_times)
+            self.selector.click_element_by_suffix(time_suffix)
             ClickHelper.next_click(self.driver)
             self.selector.click_elements_with_pattern('label[for$="~5"]')
             ClickHelper.next_click(self.driver)
@@ -61,7 +75,7 @@ class Survey:
             if ClickHelper.next_click(self.driver):
                 self.selector.click_elements_with_pattern('label[for$="~2"]')
             if ClickHelper.next_click(self.driver):
-                self.selector.click_elements_with_pattern('label[for$="~2"]')
+                self.selector.click_elements_with_pattern('label[for$="~5"]')
             time.sleep(2)
             logging.info("Review Completed!")
 
