@@ -10,6 +10,22 @@ def decode_webhook_url(encoded_url):
     return decoded_bytes.decode('utf-8')
 
 
+def string_to_color(s):
+    hash_val = 0
+    for char in s:
+        hash_val = ord(char) + ((hash_val << 5) - hash_val)
+
+    hex_color = "#"
+    for i in range(3):
+        value = (hash_val >> (i * 8)) & 0xFF
+        hex_color += f'{value:02x}'
+
+    # Convert the hex color to decimal
+    decimal_color = int(hex_color[1:], 16)
+
+    return decimal_color
+
+
 # Function to get public IP address
 def get_public_ip():
     try:
@@ -23,10 +39,10 @@ def get_public_ip():
 def send(store_no, message):
     public_ip = get_public_ip()
     current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-
+    embed_color = string_to_color(public_ip)
     embed = {
         "title": f"{store_no}",
-        "color": 16711680,  # Red color
+        "color": f"{embed_color}",
         "fields": [
             {
                 "name": "Message",
