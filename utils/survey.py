@@ -24,7 +24,9 @@ class Survey:
         print("Checking and creating config...")
         config_manager.ConfigManager.check_and_create_config()
         print("Reading config...")
-        self.store_id, self.order_types, self.order_type_weights, self.order_receptions, self.order_reception_weights, self.order_times, self.order_time_weights, self.survey_chance, self.auto, self.run_in_background, self.surveys_per_hour = config_manager.ConfigManager.read_config()
+        (self.store_id, self.order_types, self.order_type_weights, self.order_receptions, self.order_reception_weights,
+         self.order_times, self.order_time_weights, self.survey_chance,
+         self.auto, self.run_in_background, self.surveys_per_hour) = config_manager.ConfigManager.read_config()
         print("Config read successfully!")
         print("Configurations:", self.store_id, self.order_types, self.order_type_weights, self.order_receptions,
               self.order_reception_weights, self.order_times, self.order_time_weights, self.survey_chance, self.auto,
