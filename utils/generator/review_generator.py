@@ -27,9 +27,9 @@ class ReviewGen:
             logging.error("Failed to click the text box: %s", e)
             return
         if not review:
-            logging.error("Failed to generate review text.")
+            logging.info("No review generated")
         else:
-            if not review == "":
+            if review:
                 logging.info("Review generated: %s", review)
             else:
                 logging.info("No Review Generated.")
