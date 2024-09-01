@@ -38,24 +38,30 @@ class SurveySelector:
         logging.info("Chosen option: %s with suffix %s", selected_option, suffix)
         return selected_option, suffix
 
-    def select_order_type(self, types):
-        """Select order type randomly from the provided types and return the selected option and suffix."""
+    def choose_weighted_option(self, options, weights, ids):
+        """Select a weighted random option from the provided options and return the selected option and suffix."""
+        selected_option = random.choices(options, weights=weights, k=1)[0]
+        suffix = ids[selected_option]
+        logging.info("Chosen option: %s with suffix %s", selected_option, suffix)
+
+        return selected_option, suffix
+    def select_order_type(self, types, weights):
+        """Select order type randomly from the provided types using weights and return the selected option and suffix."""
         type_ids = {
             'call': '~1',
             'web': '~2',
             'app': '~3',
             'walkin': '~4'
         }
-        return self.choose_random_option(types, type_ids)
+        return self.choose_weighted_option(types, weights, type_ids)
 
-    def select_order_reception(self, receptions, selected_type):
-        """Select order reception randomly from the provided types and return the selected option and suffix."""
+    def select_order_reception(self, receptions, weights, selected_type):
+        """Select order reception randomly from the provided types using weights and return the selected option and suffix."""
         reception_ids = {
             'delivery': '~1',
             'carryout': '~3',
             'dinein': '~2'
         }
-
         possible_receptions = {
             "walkin": ['carryout', 'dinein'],
             "web": ['carryout', 'delivery'],
@@ -64,14 +70,15 @@ class SurveySelector:
         }.get(selected_type, receptions)
 
         valid_receptions = [r for r in possible_receptions if r in receptions]
-
+        valid_weights = [weights[receptions.index(r)] for r in valid_receptions]
         if not valid_receptions:
             valid_receptions = [r for r in receptions if r in reception_ids]
+            valid_weights = [weights[receptions.index(r)] for r in valid_receptions]
 
-        return self.choose_random_option(valid_receptions, reception_ids)
+        return self.choose_weighted_option(valid_receptions, valid_weights, reception_ids)
 
-    def select_daypart(self, order_times):
-        """Select a daypart randomly from the provided order times and return the selected option and suffix."""
+    def select_daypart(self, order_times, weights):
+        """Select a daypart randomly from the provided order times using weights and return the selected option and suffix."""
         daypart_ids = {
             "breakfast": "~1",
             "lunch": "~2",
@@ -80,7 +87,7 @@ class SurveySelector:
             "latenight": "~5",
             "overnight": "~6",
         }
-        return self.choose_random_option(order_times, daypart_ids)
+        return self.choose_weighted_option(order_times, weights, daypart_ids)
 
     def select_highest_suffix(self, pattern):
         """Select the label with the highest for$=~# suffix."""

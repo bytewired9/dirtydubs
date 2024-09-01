@@ -17,6 +17,15 @@ class Survey:
         self.driver = driver
         self.selector = ss.SurveySelector(driver)
 
+    @staticmethod
+    def execute(action, driver):
+        """executes the given action and attempts to click NextButton, retrying if necessary."""
+        while True:
+            action()  # Perform the action (e.g., selecting an option)
+            result = ClickHelper.next_click(driver)
+            if result != "retry":
+                break  # Exit the loop if the click was successful or failed without needing a retry
+
     def run(self):
         """Run the survey process."""
         try:
@@ -25,18 +34,24 @@ class Survey:
             [
                 store_id,
                 order_types,
+                order_type_weights,
                 order_receptions,
-                order_times
+                order_reception_weights,
+                order_times,
+                order_time_weights,
+                survey_chance
+
             ] = cm.ConfigManager.read_config()
             logging.info("Store Number: %s", store_id)
             logging.info("Order Types: %s", order_types)
             logging.info("Order Receptions: %s", order_receptions)
             logging.info("Order Times: %s", order_times)
+            logging.info("Chance of Survey: %s", survey_chance)
 
-            selected_type, type_suffix = self.selector.select_order_type(order_types)
-            reception, reception_suffix = self.selector.select_order_reception(order_receptions, selected_type)
-            order_time, time_suffix = self.selector.select_daypart(order_times)
-            review = rg.generate_review()
+            selected_type, type_suffix = self.selector.select_order_type(order_types, order_type_weights)
+            reception, reception_suffix = self.selector.select_order_reception(order_receptions, selected_type, order_reception_weights)
+            order_time, time_suffix = self.selector.select_daypart(order_times, order_time_weights)
+            review = rg.generate_review(survey_chance)
             if review == "":
                 review_message = "None"
             else:
@@ -55,28 +70,22 @@ class Survey:
 
             WebDriverWaiter.wait_for_invisibility(self.driver, "#pace", use_css_selector=True)
             ClickHelper.next_click(self.driver)
-            self.selector.click_elements_with_pattern('label[for$="~5"]')
-            ClickHelper.next_click(self.driver)
-            ReviewGen.generate(self.driver, store_id, review)
-            ClickHelper.next_click(self.driver)
-            self.selector.click_elements_with_pattern('label[for$="~5"]')
-            ClickHelper.next_click(self.driver)
-            self.selector.click_element_by_suffix(type_suffix)
-            ClickHelper.next_click(self.driver)
-            self.selector.click_element_by_suffix(reception_suffix)
-            ClickHelper.next_click(self.driver)
-            self.selector.click_element_by_suffix(time_suffix)
-            ClickHelper.next_click(self.driver)
-            self.selector.click_elements_with_pattern('label[for$="~5"]')
-            ClickHelper.next_click(self.driver)
-            self.selector.click_elements_with_pattern('label[for$="~5"]')
-            ClickHelper.next_click(self.driver)
-            self.selector.click_elements_with_pattern('label[for$="~2"]')
+            self.execute(lambda: self.selector.click_elements_with_pattern('label[for$="~5"]'), self.driver)
+            self.execute(lambda: ReviewGen.generate(self.driver, store_id, review), self.driver)
+            self.execute(lambda: self.selector.click_elements_with_pattern('label[for$="~5"]'), self.driver)
+            self.execute(lambda: self.selector.click_element_by_suffix(type_suffix), self.driver)
+            self.execute(lambda: self.selector.click_element_by_suffix(reception_suffix), self.driver)
+            self.execute(lambda: self.selector.click_element_by_suffix(time_suffix), self.driver)
+            self.execute(lambda: self.selector.click_elements_with_pattern('label[for$="~5"]'), self.driver)
+            self.execute(lambda: self.selector.click_elements_with_pattern('label[for$="~5"]'), self.driver)
+            self.execute(lambda: self.selector.click_elements_with_pattern('label[for$="~2"]'), self.driver)
+
+            # Additional logic for conditional retries
             if ClickHelper.next_click(self.driver):
                 self.selector.click_elements_with_pattern('label[for$="~2"]')
-            if ClickHelper.next_click(self.driver):
-                self.selector.click_elements_with_pattern('label[for$="~5"]')
-            time.sleep(2)
+                if ClickHelper.next_click(self.driver):
+                    self.selector.click_elements_with_pattern('label[for$="~5"]')
+                    ClickHelper.next_click(self.driver)
             logging.info("Review Completed!")
 
         except Exception as e:

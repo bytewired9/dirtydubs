@@ -96,7 +96,7 @@ def select_pack(cursor):
         raise Exception("No config table found in the database.")
 
 
-def generate_review(min_phrases=3, max_phrases=5):
+def generate_review(review_chance, min_phrases=3, max_phrases=5):
     db_files = find_db_files(os.path.join(os.path.dirname(__file__), "../../language_packs"))
     if not db_files:
         raise Exception("No .db files found in the directory.")
@@ -214,7 +214,7 @@ def generate_review(min_phrases=3, max_phrases=5):
     if random.random() < 0.10:
         review_text = review_text.lower()
 
-    if random.random() > 0.20:
+    if random.random() > float(review_chance):
         review_text = ""
 
     conn.close()
