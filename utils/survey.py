@@ -24,7 +24,10 @@ class Survey:
             self.order_reception_weights,
             self.order_times,
             self.order_time_weights,
-            self.survey_chance
+            self.survey_chance,
+            self.auto,
+            self.run_in_background,
+            self.surveys_per_hour
 
         ] = cm.ConfigManager.read_config()
         self.driver = WebDriverFactory.get_webdriver(browser.lower())

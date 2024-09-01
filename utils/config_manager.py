@@ -151,7 +151,10 @@ surveys_per_hour = 1.5
             order_reception_weights,
             order_times,
             order_time_weights,
-            survey_chance
+            survey_chance,
+            auto,
+            run_in_background,
+            surveys_per_hour
         }
 
 
