@@ -63,8 +63,12 @@ class ClickHelper:
 
     @staticmethod
     def next_click(driver):
-        """Safely click NextButton element and wait for .QuestionText's innerHTML to change."""
-        while True:
+        """Safely click NextButton element and wait for .QuestionText's innerHTML to change.
+
+        Returns "retry" if the NextButton fails 3 times, otherwise returns True or False.
+        """
+        retries = 3
+        for attempt in range(retries):
             time.sleep(0.4)
             try:
                 question_text_element = driver.find_element(By.CSS_SELECTOR, ".QuestionText")
@@ -74,18 +78,23 @@ class ClickHelper:
                 return False
 
             if not ClickHelper.safe_click(driver, "NextButton"):
-                return False
-
-            try:
-                WebDriverWait(driver, 2).until(
-                    lambda d: d.find_element(
-                        By.CSS_SELECTOR,
-                        ".QuestionText"
-                    ).get_attribute(
-                        "innerHTML"
-                    ) != old_html
-                )
-                break
-            except Exception:
-                continue
-        return True
+                if attempt < retries - 1:
+                    logging.warning(f"NextButton click failed. Retry {attempt + 1}/{retries}")
+                    continue
+                else:
+                    logging.error("NextButton click failed 3 times.")
+                    return "retry"
+            else:
+                try:
+                    WebDriverWait(driver, 2).until(
+                        lambda d: d.find_element(
+                            By.CSS_SELECTOR,
+                            ".QuestionText"
+                        ).get_attribute(
+                            "innerHTML"
+                        ) != old_html
+                    )
+                    return True
+                except Exception:
+                    continue
+        return False
