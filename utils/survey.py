@@ -1,38 +1,39 @@
 import logging
-import time
+# import time
 import traceback
-from utils.webdriver.web_driver_waiter import WebDriverWaiter
-from utils.webdriver.web_driver_factory import WebDriverFactory
-from utils.generator.review_generator import ReviewGen
-import utils.generator.reviewgen as rg
+from pprint import pprint
+
+import utils.generator.reviewgen as review_gen
+from utils import config_manager
+from utils import survey_selector
 from utils.click_helper import ClickHelper
-from utils import config_manager as cm
-from utils import survey_selector as ss
+from utils.generator.review_generator import ReviewGen
 from utils.maintenance import telemetry
+from utils.webdriver.web_driver_factory import WebDriverFactory
+from utils.webdriver.web_driver_waiter import WebDriverWaiter
+
 
 class Survey:
     """Main class for running the survey."""
 
     def __init__(self, browser):
         super().__init__()
-        cm.ConfigManager.check_and_create_config()
-        [
-            self.store_id,
-            self.order_types,
-            self.order_type_weights,
-            self.order_receptions,
-            self.order_reception_weights,
-            self.order_times,
-            self.order_time_weights,
-            self.survey_chance,
-            self.auto,
-            self.run_in_background,
-            self.surveys_per_hour
-
-        ] = cm.ConfigManager.read_config()
-        self.driver = WebDriverFactory.get_webdriver(browser.lower())
-        self.selector = ss.SurveySelector(self.driver)
-
+        self.browser = browser
+        print("Browser: ", self.browser)
+        print("Config File: ", config_manager.ConfigManager.CONFIG_FILE)
+        print("Checking and creating config...")
+        config_manager.ConfigManager.check_and_create_config()
+        print("Reading config...")
+        self.store_id, self.order_types, self.order_type_weights, self.order_receptions, self.order_reception_weights, self.order_times, self.order_time_weights, self.survey_chance, self.auto, self.run_in_background, self.surveys_per_hour = config_manager.ConfigManager.read_config()
+        print("Config read successfully!")
+        print("Configurations:", self.store_id, self.order_types, self.order_type_weights, self.order_receptions,
+              self.order_reception_weights, self.order_times, self.order_time_weights, self.survey_chance, self.auto,
+              self.run_in_background, self.surveys_per_hour)
+        print("Getting webdriver...")
+        self.driver = WebDriverFactory.get_webdriver(self.browser.lower())
+        print("Setting up selector...")
+        self.selector = survey_selector
+        pprint(self)
 
     @staticmethod
     def execute(action, driver):
@@ -53,19 +54,20 @@ class Survey:
             logging.info("Chance of Survey: %s", self.survey_chance)
 
             selected_type, type_suffix = self.selector.select_order_type(self.order_types, self.order_type_weights)
-            reception, reception_suffix = self.selector.select_order_reception(self.order_receptions, selected_type, self.order_reception_weights)
+            reception, reception_suffix = self.selector.select_order_reception(self.order_receptions, selected_type,
+                                                                               self.order_reception_weights)
             order_time, time_suffix = self.selector.select_daypart(self.order_times, self.order_time_weights)
-            review = rg.generate_review(self.survey_chance)
+            review = review_gen.generate_review(self.survey_chance)
             if review == "":
                 review_message = "None"
             else:
                 review_message = review
             start_message = (
-                f"Review started: \n" +
-                f"Order Type: `{selected_type}` \n" +
-                f"Order Reception: `{reception}` \n" +
-                f"Order Time: `{order_time}` \n" +
-                f"Review Chosen: `{review_message}`"
+                    f"Review started: \n" +
+                    f"Order Type: `{selected_type}` \n" +
+                    f"Order Reception: `{reception}` \n" +
+                    f"Order Time: `{order_time}` \n" +
+                    f"Review Chosen: `{review_message}`"
             )
             telemetry.send(self.store_id, start_message)
 

@@ -5,8 +5,9 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as ec
 from selenium.webdriver.support.wait import WebDriverWait
 
-from . import reviewgen as rg
+# import reviewgen as rg
 from utils.maintenance import telemetry
+
 
 class ReviewGen:
     """Class for generating and inputting reviews."""

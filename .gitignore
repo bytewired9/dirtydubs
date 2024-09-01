@@ -3,3 +3,5 @@
 
 # Ignore virtual environment directory
 venv/
+
+config.ini
