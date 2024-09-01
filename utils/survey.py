@@ -88,7 +88,7 @@ class Survey:
                     self.selector.click_elements_with_pattern('label[for$="~5"]')
                     ClickHelper.next_click(self.driver)
             logging.info("Review Completed!")
-            driver.quit()
+            self.driver.quit()
         except Exception as e:
             tb_info = traceback.extract_tb(e.__traceback__)[-1]
             logging.error(
