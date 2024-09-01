@@ -43,6 +43,11 @@ order_time_weights = 1 1 1 1 1 1
 # Survey chance: probability of receiving a survey, value between 0 and 1
 survey_chance = 0.2
 
+[automatic]
+auto = False
+run_in_background = False
+surveys_per_hour = 1.5
+
 """
             )
 
@@ -69,6 +74,11 @@ survey_chance = 0.2
                 'order_time': 'breakfast lunch midday dinner latenight overnight',
                 'order_time_weights': '1 1 1 1 1 1',
                 'survey_chance': '0.2'
+            },
+            "automatic": {
+                "auto": "False",
+                "run_in_background": "False",
+                "surveys_per_hour": "1.5"
             }
         }
 
@@ -128,6 +138,10 @@ survey_chance = 0.2
         order_time_weights = list(map(int, config.get('order', 'order_time_weights').split()))
 
         survey_chance = config.get('order', 'survey_chance')
+
+        auto = config.get('automatic', 'auto')
+        run_in_background = config.get('automatic', 'run_in_background')
+        surveys_per_hour = config.get('automatic', 'surveys_per_hour')
 
         return {
             store_id,
