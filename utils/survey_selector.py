@@ -44,6 +44,9 @@ def select_daypart(order_times, weights):
 def select_order_reception(receptions, weights, selected_type):
     """Select order reception randomly from the provided types using weights and return the selected option and
     suffix."""
+    print("Receptions: ", type(receptions), receptions)
+    print("Weights: ", type(weights), weights)
+    print("Selected Type: ", type(selected_type), selected_type)
     reception_ids = {
         'delivery': '~1',
         'carryout': '~3',
