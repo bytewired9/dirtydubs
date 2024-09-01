@@ -5,85 +5,87 @@ from selenium.webdriver.common.by import By
 
 from utils import click_helper as ch
 from utils.webdriver.web_driver_waiter import WebDriverWaiter
+from selenium import webdriver
 
-
-def choose_weighted_option(options, weights, ids):
-    """Select a weighted random option from the provided options and return the selected option and suffix."""
-    selected_option = random.choices(options, weights=weights, k=1)[0]
-    suffix = ids[selected_option]
-    logging.info("Chosen option: %s with suffix %s", selected_option, suffix)
-
-    return selected_option, suffix
-
-
-def select_order_type(types, weights):
-    """Select order type randomly from the provided types using weights and return the selected option and suffix."""
-    type_ids = {
-        'call': '~1',
-        'web': '~2',
-        'app': '~3',
-        'walkin': '~4'
-    }
-    return choose_weighted_option(types, weights, type_ids)
-
-
-def select_daypart(order_times, weights):
-    """Select a daypart randomly from the provided order times using weights and return the selected option and
-    suffix."""
-    daypart_ids = {
-        "breakfast": "~1",
-        "lunch": "~2",
-        "midday": "~3",
-        "dinner": "~4",
-        "latenight": "~5",
-        "overnight": "~6",
-    }
-    return choose_weighted_option(order_times, weights, daypart_ids)
-
-
-def select_order_reception(receptions, weights, selected_type):
-    """Select order reception randomly from the provided types using weights and return the selected option and
-    suffix."""
-    print("Receptions: ", type(receptions), receptions)
-    print("Weights: ", type(weights), weights)
-    print("Selected Type: ", type(selected_type), selected_type)
-    reception_ids = {
-        'delivery': '~1',
-        'carryout': '~3',
-        'dinein': '~2'
-    }
-    possible_receptions = {
-        "walkin": ['carryout', 'dinein'],
-        "web": ['carryout', 'delivery'],
-        "app": ['carryout', 'delivery'],
-        "call": ['carryout']
-    }.get(selected_type, receptions)
-
-    valid_receptions = [r for r in possible_receptions if r in receptions]
-    valid_weights = [weights[receptions.index(r)] for r in valid_receptions]
-    if not valid_receptions:
-        valid_receptions = [r for r in receptions if r in reception_ids]
-        valid_weights = [weights[receptions.index(r)] for r in valid_receptions]
-
-    return choose_weighted_option(valid_receptions, valid_weights, reception_ids)
-
-
-def choose_random_option(options, ids):
-    """Select a random option from the provided options and return the selected option and suffix."""
-    selected_option = random.choice(options)
-    suffix = ids[selected_option]
-    logging.info("Chosen option: %s with suffix %s", selected_option, suffix)
-    return selected_option, suffix
-
+type WebDriverType = webdriver.chrome.webdriver.WebDriver | webdriver.firefox.webdriver.WebDriver | webdriver.edge.webdriver.WebDriver
 
 class SurveySelector:
     """Selector class for survey operations."""
 
-    def __init__(self, driver):
+    def __init__(self, driver: WebDriverType):
         super().__init__()
         self.driver = driver
 
-    def click_element_by_suffix(self, suffix):
+    @classmethod
+    def choose_weighted_option(cls, options, weights, ids):
+        """Select a weighted random option from the provided options and return the selected option and suffix."""
+        selected_option = random.choices(options, weights=weights, k=1)[0]
+        suffix = ids[selected_option]
+        logging.info("Chosen option: %s with suffix %s", selected_option, suffix)
+
+        return selected_option, suffix
+
+    @classmethod
+    def select_order_type(cls, types, weights):
+        """Select order type randomly from the provided types using weights and return the selected option and suffix."""
+        type_ids = {
+            'call': '~1',
+            'web': '~2',
+            'app': '~3',
+            'walkin': '~4'
+        }
+        return cls.choose_weighted_option(types, weights, type_ids)
+
+    @classmethod
+    def select_daypart(cls, order_times, weights):
+        """Select a daypart randomly from the provided order times using weights and return the selected option and
+        suffix."""
+        daypart_ids = {
+            "breakfast": "~1",
+            "lunch": "~2",
+            "midday": "~3",
+            "dinner": "~4",
+            "latenight": "~5",
+            "overnight": "~6",
+        }
+        return cls.choose_weighted_option(order_times, weights, daypart_ids)
+
+    @classmethod
+    def select_order_reception(cls, receptions, weights, selected_type): # TODO: Type hints
+        """Select order reception randomly from the provided types using weights and return the selected option and
+        suffix."""
+        print("Receptions: ", type(receptions), receptions)
+        print("Weights: ", type(weights), weights)
+        print("Selected Type: ", type(selected_type), selected_type)
+        reception_ids = {
+            'delivery': '~1',
+            'carryout': '~3',
+            'dinein': '~2'
+        }
+        possible_receptions = {
+            "walkin": ['carryout', 'dinein'],
+            "web": ['carryout', 'delivery'],
+            "app": ['carryout', 'delivery'],
+            "call": ['carryout']
+        }.get(selected_type, receptions)
+
+        valid_receptions = [r for r in possible_receptions if r in receptions]
+        valid_weights = [weights[receptions.index(r)] for r in valid_receptions]
+        if not valid_receptions:
+            valid_receptions = [r for r in receptions if r in reception_ids]
+            valid_weights = [weights[receptions.index(r)] for r in valid_receptions]
+
+        return cls.choose_weighted_option(valid_receptions, valid_weights, reception_ids)
+
+    @staticmethod
+    def choose_random_option(options, ids): # TODO: Type hints
+        """Select a random option from the provided options and return the selected option and suffix."""
+        selected_option = random.choice(options)
+        suffix = ids[selected_option]
+        logging.info("Chosen option: %s with suffix %s", selected_option, suffix)
+        return selected_option, suffix
+
+    def click_element_by_suffix(self, suffix):# TODO: Type hints
         """Click an element by its suffix."""
         WebDriverWaiter.wait_for_presence(
             self.driver,

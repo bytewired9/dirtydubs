@@ -6,7 +6,7 @@ import nltk
 from nltk.tokenize import word_tokenize
 
 # Suppress NLTK download messages
-nltk.download("punkt", quiet=True)
+nltk.download("punkt", quiet=False)
 nltk.download("averaged_perceptron_tagger", quiet=True)
 
 

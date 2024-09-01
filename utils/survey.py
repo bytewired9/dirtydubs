@@ -4,13 +4,16 @@ from pprint import pprint
 from typing import Callable
 from selenium import webdriver
 from .maintenance import telemetry
-from utils import config_manager, survey_selector, click_helper
+from utils import config_manager
+from utils.click_helper import ClickHelper as click_helper
+from utils.survey_selector import SurveySelector as survey_selector
 from utils.generator.reviewgen import generate_review
 from utils.generator.review_generator import ReviewGen
 from utils.webdriver.web_driver_factory import WebDriverFactory
 from utils.webdriver.web_driver_waiter import WebDriverWaiter
 
 type WebDriverType = webdriver.chrome.webdriver.WebDriver | webdriver.firefox.webdriver.WebDriver | webdriver.edge.webdriver.WebDriver
+
 
 class Survey:
     """Main class for running the survey."""
@@ -19,7 +22,7 @@ class Survey:
         super().__init__()
         self.browser = browser
         self.driver: WebDriverType = WebDriverFactory.get_webdriver(self.browser.lower())
-        self.selector = survey_selector
+        self.selector = survey_selector(self.driver)
         self._setup_config()
 
     def _setup_config(self):
@@ -97,7 +100,7 @@ class Survey:
 
             selected_type, type_suffix = self.selector.select_order_type(self.order_types, self.order_type_weights)
             reception, reception_suffix = self.selector.select_order_reception(
-                self.order_receptions, selected_type, self.order_reception_weights
+                self.order_receptions, selected_type=selected_type, weights=self.order_reception_weights
             )
             order_time, time_suffix = self.selector.select_daypart(self.order_times, self.order_time_weights)
             review = generate_review(self.survey_chance)
