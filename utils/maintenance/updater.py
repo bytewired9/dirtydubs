@@ -90,24 +90,12 @@ def update_files(src_dir, dst_dir):
                     shutil.copytree(src_path, dst_path)
                 else:
                     logging.info(f"Updating directory {relative_path}")
-                    update_files(src_path, dst_path)
+                    update_files(src_path, dst_path)  # Recursively update nested directories
             else:
                 logging.info(f"Copying file {src_path} to {dst_path}")
-                shutil.copy2(src_path, dst_path)
+                shutil.copy2(src_path, dst_path)  # Only copy and replace files
 
-        # Remove items in the destination that are not in the source
-        for item in dst_items - src_items:
-            dst_path = os.path.join(dst_dir, item)
-            relative_path = os.path.relpath(dst_path, dst_dir)
-            if should_skip(relative_path):
-                logging.info(f"Skipping removal of {relative_path}")
-                continue
-            if os.path.isdir(dst_path):
-                logging.info(f"Removing directory {dst_path}")
-                shutil.rmtree(dst_path)
-            else:
-                logging.info(f"Removing file {dst_path}")
-                os.remove(dst_path)
+        # Removed deletion logic here to avoid removing any files in destination
 
     except Exception as e:
         logging.error(f"Error updating files: {e}")
