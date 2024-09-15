@@ -11,7 +11,7 @@ from utils.survey import Survey
 from utils.maintenance import updater
 
 BROWSER = "edge"
-VERSION = "1.1.0"
+VERSION = "2.0.0"
 init(autoreset=True)
 
 # Configure logging
@@ -22,7 +22,7 @@ logging.basicConfig(
     Fore.GREEN + ' - %(message)s'
 )
 
-LOGO = """
+LOGO = r"""
 
      ____  _      __        ____        __        
     / __ \(_)____/ /___  __/ __ \__  __/ /_  _____
