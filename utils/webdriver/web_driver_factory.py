@@ -1,10 +1,13 @@
 import os
+
 from selenium import webdriver
-from selenium.webdriver.edge.service import Service
 from selenium.webdriver.chrome.options import Options as ChromeOptions
-from selenium.webdriver.firefox.options import Options as FirefoxOptions
 from selenium.webdriver.edge.options import Options as EdgeOptions
-from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
+from selenium.webdriver.edge.service import Service
+from selenium.webdriver.firefox.options import Options as FirefoxOptions
+
+
+# from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 
 
 class WebDriverFactory:

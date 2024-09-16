@@ -3,12 +3,14 @@ Survey automation script using Selenium WebDriver.
 This script reads configuration settings, navigates through a survey, and generates reviews.
 """
 
-import sys
-import logging
 import argparse
+import logging
+import sys
+
 from colorama import Fore, init
-from utils.survey import Survey
+
 from utils.maintenance import updater
+from utils.survey import Survey
 
 BROWSER = "edge"
 VERSION = "2.0.0"
@@ -57,10 +59,9 @@ def main(repeat_count):
     if updater.update(VERSION, repeat_count):
         print(LOGO)
     for _ in range(repeat_count):
-
-        if BROWSER.lower() in ["chrome", "edge"]:
-            sys.stdout.write("\033[F")  # back to previous line
-            sys.stdout.write("\033[K")  # clear line
+        # if BROWSER.lower() in ["chrome", "edge"]:
+        #     sys.stdout.write("\033[F")  # back to previous line
+        #     sys.stdout.write("\033[K")  # clear line
         survey = Survey(BROWSER)
         survey.run()
 
@@ -79,6 +80,7 @@ if __name__ == "__main__":
 
     try:
         print(LOGO)
+        print("Calling main function with repeat count:", args.repeat)
         main(args.repeat)
     except KeyboardInterrupt:
         logging.info("\nKeyboardInterrupt caught. Cleaning up...")

@@ -3,6 +3,7 @@ import logging
 import os
 import sys
 
+
 class ConfigManager:
     """Manager class for configuration operations."""
 
@@ -101,7 +102,8 @@ surveys_per_hour = 1.5
                     if not config.has_option(section, field):
                         new_lines.append(f"{field} = {value}\n")
                         updated = True
-                        logging.info(f"Added missing field '{field}' in section '{section}' with default value '{value}'")
+                        logging.info(
+                            f"Added missing field '{field}' in section '{section}' with default value '{value}'")
                     else:
                         # Keep existing fields as they are
                         for line in lines:
@@ -111,7 +113,8 @@ surveys_per_hour = 1.5
 
         # Append any remaining original lines that weren't changed
         for line in lines:
-            if not any(line.strip().startswith(f"[{section}]") or line.strip().startswith(f"{field} =") for section in default_values for field in default_values[section]):
+            if not any(line.strip().startswith(f"[{section}]") or line.strip().startswith(f"{field} =") for section in
+                       default_values for field in default_values[section]):
                 new_lines.append(line)
 
         # Write the updated config back to the file
@@ -143,7 +146,7 @@ surveys_per_hour = 1.5
         run_in_background = config.get('automatic', 'run_in_background')
         surveys_per_hour = config.get('automatic', 'surveys_per_hour')
 
-        return {
+        return [
             store_id,
             order_types,
             order_type_weights,
@@ -155,6 +158,4 @@ surveys_per_hour = 1.5
             auto,
             run_in_background,
             surveys_per_hour
-        }
-
-
+        ]

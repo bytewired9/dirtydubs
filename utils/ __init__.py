@@ -1,8 +1,10 @@
-from . import generator
-from . import webdriver
-from . import click_helper
-from . import config_manager
-from . import survey
-from . import survey_selector
+import click_helper
+import config_manager
+import generator
+import survey
+import survey_selector
+import webdriver
+
+
 
 __all__ = ["generator", "webdriver", "click_helper", "config_manager", "survey", "survey_selector"]

@@ -3,3 +3,11 @@
 
 # Ignore virtual environment directory
 venv/
+
+config.ini
+
+**/.idea
+*.pyc
+__pycache__/
+.DS_Store
+.env
