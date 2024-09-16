@@ -13,7 +13,7 @@ from utils.maintenance import updater
 from utils.survey import Survey
 
 BROWSER = "edge"
-VERSION = "1.1.0"
+VERSION = "2.0.0"
 init(autoreset=True)
 
 # Configure logging

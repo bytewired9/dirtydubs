@@ -5,11 +5,6 @@ import sqlite3
 import nltk
 from nltk.tokenize import word_tokenize
 
-# Suppress NLTK download messages
-nltk.download("punkt", quiet=False)
-nltk.download("averaged_perceptron_tagger", quiet=True)
-
-
 def replace_with_curated_synonyms(sentence):
     synonym_dict = {
         "went": ["visited", "checked out", "explored"],
@@ -219,3 +214,7 @@ def generate_review(review_chance, min_phrases=3, max_phrases=5):
 
     conn.close()
     return review_text
+
+# Suppress NLTK download messages
+nltk.download("punkt", quiet=True)
+nltk.download("averaged_perceptron_tagger", quiet=True)
