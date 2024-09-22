@@ -3,17 +3,16 @@ Survey automation script using Selenium WebDriver.
 This script reads configuration settings, navigates through a survey, and generates reviews.
 """
 
-import argparse
-import logging
 import sys
-
+import logging
+import argparse
 from colorama import Fore, init
-
-from utils.maintenance import updater
 from utils.survey import Survey
+from utils.maintenance import updater
+import  traceback
 
 BROWSER = "edge"
-VERSION = "2.0.0"
+VERSION = "1.1.0"
 init(autoreset=True)
 
 # Configure logging
@@ -25,7 +24,6 @@ logging.basicConfig(
 )
 
 LOGO = r"""
-
      ____  _      __        ____        __        
     / __ \(_)____/ /___  __/ __ \__  __/ /_  _____
    / / / / / ___/ __/ / / / / / / / / / __ \/ ___/
@@ -53,15 +51,17 @@ LOGO = r"""
                        
 """
 
-
 def main(repeat_count):
     """Main function to run the survey specified times."""
+    # Check for updates before proceeding
     if updater.update(VERSION, repeat_count):
-        print(LOGO)
+        print(LOGO)  # Display logo only once if no update happens
+
+    # Run the survey the specified number of times
     for _ in range(repeat_count):
-        # if BROWSER.lower() in ["chrome", "edge"]:
-        #     sys.stdout.write("\033[F")  # back to previous line
-        #     sys.stdout.write("\033[K")  # clear line
+        if BROWSER.lower() in ["chrome", "edge"]:
+            sys.stdout.write("\033[F")  # back to previous line
+            sys.stdout.write("\033[K")  # clear line
         survey = Survey(BROWSER)
         survey.run()
 
@@ -80,9 +80,11 @@ if __name__ == "__main__":
 
     try:
         print(LOGO)
-        print("Calling main function with repeat count:", args.repeat)
         main(args.repeat)
     except KeyboardInterrupt:
         logging.info("\nKeyboardInterrupt caught. Cleaning up...")
-    finally:
-        sys.exit()
+    except Exception as e:
+        logging.error(f"An error occurred: {e}")
+        logging.error(traceback.format_exc())
+    # Removed the finally block with sys.exit()
+

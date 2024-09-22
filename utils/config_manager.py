@@ -3,7 +3,6 @@ import logging
 import os
 import sys
 
-
 class ConfigManager:
     """Manager class for configuration operations."""
 
@@ -33,13 +32,12 @@ id = INSERT_STORENO_HERE
 type_of_order = call web app walkin
 type_of_order_weights = 1 1 1 1
 
-# Order reception modes: you can specify multiple modes separated by spaces
 order_reception = carryout delivery dinein
 order_reception_weights = 1 1 1
 
-# Order times: you can specify multiple times separated by spaces
 order_time = breakfast lunch midday dinner latenight overnight
 order_time_weights = 1 1 1 1 1 1
+
 
 # Survey chance: probability of receiving a survey, value between 0 and 1
 survey_chance = 0.2
@@ -102,8 +100,7 @@ surveys_per_hour = 1.5
                     if not config.has_option(section, field):
                         new_lines.append(f"{field} = {value}\n")
                         updated = True
-                        logging.info(
-                            f"Added missing field '{field}' in section '{section}' with default value '{value}'")
+                        logging.info(f"Added missing field '{field}' in section '{section}' with default value '{value}'")
                     else:
                         # Keep existing fields as they are
                         for line in lines:
@@ -113,8 +110,7 @@ surveys_per_hour = 1.5
 
         # Append any remaining original lines that weren't changed
         for line in lines:
-            if not any(line.strip().startswith(f"[{section}]") or line.strip().startswith(f"{field} =") for section in
-                       default_values for field in default_values[section]):
+            if not any(line.strip().startswith(f"[{section}]") or line.strip().startswith(f"{field} =") for section in default_values for field in default_values[section]):
                 new_lines.append(line)
 
         # Write the updated config back to the file
@@ -146,6 +142,7 @@ surveys_per_hour = 1.5
         run_in_background = config.get('automatic', 'run_in_background')
         surveys_per_hour = config.get('automatic', 'surveys_per_hour')
 
+        print("config_manager.py", store_id, order_types, order_type_weights, order_receptions, order_reception_weights, order_times, order_time_weights, survey_chance, auto, run_in_background, surveys_per_hour )
         return [
             store_id,
             order_types,
@@ -159,3 +156,6 @@ surveys_per_hour = 1.5
             run_in_background,
             surveys_per_hour
         ]
+
+
+
